@@ -49,6 +49,5 @@ public class ServletProcessor1 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

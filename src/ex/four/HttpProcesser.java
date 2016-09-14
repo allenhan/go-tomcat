@@ -1,5 +1,8 @@
 package ex.four;
 
+import ex.four.*;
+import ex.four.HttpConnecter;
+
 import java.net.Socket;
 
 /**
@@ -10,14 +13,24 @@ public class HttpProcesser implements Runnable {
     Socket socket=null;
     boolean stoped=false;
     boolean available=false;// «∑Òø…”√socket
+    HttpConnecter connecter;
+
+    public HttpProcesser(HttpConnecter connecter){
+        this.connecter=connecter;
+    }
 
     @Override
     public void run() {
         while(!stoped){
             Socket socket=await();
             if(socket==null) continue;
-
+            process(socket);
+            connecter.recyleProcessor(this);
         }
+    }
+
+    private  void process(Socket socket){
+
     }
 
     synchronized void assign(Socket socket) {
@@ -50,4 +63,8 @@ public class HttpProcesser implements Runnable {
         return socket;
     }
 
+    public  void Start(){
+        Thread thread=new Thread(this);
+        thread.run();
+    }
 }
